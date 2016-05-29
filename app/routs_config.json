@@ -1,0 +1,48 @@
+{
+  "GET": {
+    "#^\/$#": {
+      "service": "user",
+      "action": "getTop"
+    },
+    "#^\/.page=([0-9]+)$#": {
+      "service": "user",
+      "action": "getTop"
+    },
+    "#^\/auth.*$#": {
+      "service": "user",
+      "action": "auth"
+    },
+    "#^\/project\/([0-9]+)$#": {
+      "service": "project",
+      "action": "getItem"
+    },
+    "#^\/project$#": {
+      "service": "project",
+      "action": "getList"
+    },
+    "#^\/project\/([0-9]+)\/bid\/([0-9]+)$#": {
+      "service": "project",
+      "action": "updateBid"
+    },
+    "#^\/logout$#": {
+      "service": "user",
+      "action": "logout"
+    }
+  },
+  "POST": {
+    "#^\/project\/([0-9]+)\/bid$#": {
+      "service": "project",
+      "action": "addBid"
+    },
+    "#^\/project\/([0-9]+)$#": {
+      "service": "project",
+      "action": "add"
+    }
+  },
+  "PUT": {
+    "#^\/project\/([0-9]+)$#": {
+      "service": "project",
+      "action": "statusChange"
+    }
+  }
+}

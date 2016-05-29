@@ -1,0 +1,42 @@
+{
+  "user": {
+    "constructor": "controller\\User",
+    "arguments": ["project.model","request","user.model"]
+  },
+  "user.model": {
+  "constructor": "model\\User",
+  "arguments": ["request","db"]
+  },
+  "tags.model": {
+    "constructor": "model\\Tag",
+    "arguments": ["request","db"]
+  },
+  "user.view": {
+    "constructor": "view\\User",
+    "arguments": []
+  },
+  "project": {
+    "constructor": "controller\\Project",
+    "arguments": ["request","project.model"]
+  },
+  "project.model": {
+    "constructor": "model\\Project",
+    "arguments": ["request","db"]
+  },
+  "project.view": {
+    "constructor": "view\\Project",
+    "arguments": []
+  },
+  "request": {
+    "constructor": "framework\\Request",
+    "arguments": []
+  },
+  "router": {
+    "constructor": "framework\\Route",
+    "arguments": ["request"]
+  },
+  "db": {
+    "constructor": "framework\\Db",
+    "arguments": []
+  }
+}

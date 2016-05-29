@@ -1,0 +1,14 @@
+{
+  "framework": {
+    "path": "../app/framework/"
+  },
+  "controller": {
+    "path": "../src/controllers/"
+  },
+  "model": {
+    "path": "../src/models/"
+  },
+  "view": {
+    "path": "../src/views/"
+  }
+}
