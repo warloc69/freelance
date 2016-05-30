@@ -8,6 +8,10 @@
       "service": "user",
       "action": "getTop"
     },
+    "#^\/filter.*#": {
+      "service": "user",
+      "action": "getTop"
+    },
     "#^\/auth.*$#": {
       "service": "user",
       "action": "auth"

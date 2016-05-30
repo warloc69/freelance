@@ -20,7 +20,7 @@ class User extends QueryBuilder
         $this->request = $request;
         $this->table   = "users";
         $this->db      = $db->getConnection();
-        session_start();
+        @session_start();
     }
 
 

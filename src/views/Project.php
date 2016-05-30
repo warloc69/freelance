@@ -7,6 +7,7 @@
  */
 
 namespace view;
+use framework\ConfigHolder;
 
 class Project
 {
@@ -19,11 +20,19 @@ class Project
 
     function generateBody($context)
     {
-        $_SESSION['user_type'] = 'PM';
-        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'F') {
+        $url = 'https://accounts.google.com/o/oauth2/auth';
+
+        $params = array(
+            'redirect_uri'  => ConfigHolder::getConfig('google_redirect'),
+            'response_type' => 'code',
+            'client_id'     => ConfigHolder::getConfig('google_client_id'),
+            'scope'         => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+        );
+        $link   = $url.'?'.urldecode(http_build_query($params));
+
+     //   $_SESSION['user_type'] = 'PM';
+      //  if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'F') {
             include "tmp/ProjectBodyFreelancer.php";
-        } else if (isset($_SESSION['user_type'])) {
-            include "tmp/ProjectBodyCustomer.php";
-        }
+     //   } 
     }
 }

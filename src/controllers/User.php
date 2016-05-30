@@ -36,7 +36,29 @@ class User extends AbstractController
 
     function getTop()
     {
-        $criteria = [$this->model->getCriteria('status', '=', 'N')];
+        $criteria[] = $this->model->getCriteria('status', '=', 'N');
+        if ($this->request->get('reit') != null) {
+            $criteria[] = $this->model->getCriteria('expected_rait', '<', $this->request->get('reit'));
+        }
+        if ($this->request->get('budget') != null) {
+            $criteria[] = $this->model->getCriteria('cost', '<', $this->request->get('budget'));
+        }
+        if ($this->request->get('tags') != null) {
+            $tags             = $this->request->get('tags');
+            $tags             = '(\''.str_replace(',', '\',\'', $tags).'\')';
+            $projects_by_tags = $this->get('tags.model')->getList([$this->model->getCriteria('name', 'in', $tags)]);
+            $ids              = "";
+            foreach ($projects_by_tags as $project) {
+                $ids .= $project['project_id'].',';
+            }
+            $ids        = rtrim($ids, ',');
+            $criteria[] = $this->model->getCriteria('tbl.id', 'in', '('.$ids.')');
+        }
+        if ($this->request->get('deadline') != null) {
+            $date       = date('Y-m-d', strtotime(str_replace('.', '/', $this->request->get('deadline'))));
+            $criteria[] = $this->model->getCriteria('dedline', '<', $date);
+        }
+
         if ($this->request->get('page') != null) {
             $this->project->limit($this->request->get('page') * 10, 10);
         } else {

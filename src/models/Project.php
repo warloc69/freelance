@@ -20,7 +20,7 @@ class Project extends QueryBuilder
         $this->request = $request;
         $this->table   = "project";
         $this->db      = $db->getConnection();
-        session_start();
+        @session_start();
     }
 
     function addTags()

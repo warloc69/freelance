@@ -24,7 +24,7 @@ class Tag extends QueryBuilder
 
     function queryColumn()
     {
-        $this->select('tbl.name');
+        $this->select('tbl.name, tgs.project_id');
     }
 
     function queryJoin()
