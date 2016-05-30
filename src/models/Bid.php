@@ -8,7 +8,6 @@
 
 namespace model;
 
-
 use framework\QueryBuilder;
 
 class Bid extends QueryBuilder
@@ -19,7 +18,7 @@ class Bid extends QueryBuilder
     {
         parent::__construct();
         $this->request = $request;
-        $this->table = "bids";
+        $this->table   = "bids";
     }
 
 }

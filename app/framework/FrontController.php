@@ -8,26 +8,27 @@
 
 namespace framework;
 
-
 class FrontController
 {
     private $service = null;
     private $action = null;
     private $di = null;
+
     function __construct()
     {
-        $this->di =  new \framework\DIContainer();
+        $this->di = new \framework\DIContainer();
         ConfigHolder::load();
-        $rout = $this->di->get('router');
+        $rout          = $this->di->get('router');
         $this->service = $rout->getService();
-        $this->action =  $rout->getAction();
+        $this->action  = $rout->getAction();
         $this->execut();
     }
 
-    function execut() {
-        if($this->service != null && $this->action != null) {
+    function execut()
+    {
+        if ($this->service != null && $this->action != null) {
             $service = $this->di->get($this->service);
-            call_user_func(array($service,$this->action));
+            call_user_func(array($service, $this->action));
         }
     }
 

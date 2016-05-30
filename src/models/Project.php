@@ -8,7 +8,6 @@
 
 namespace model;
 
-
 use framework\QueryBuilder;
 
 class Project extends QueryBuilder
@@ -19,12 +18,12 @@ class Project extends QueryBuilder
     {
         parent::__construct();
         $this->request = $request;
-        $this->table = "project";
-        $this->db = $db->getConnection();
+        $this->table   = "project";
+        $this->db      = $db->getConnection();
         session_start();
     }
-  
-    function addTags() {
-        
+
+    function addTags()
+    {
     }
 }

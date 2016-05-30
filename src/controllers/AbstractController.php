@@ -8,11 +8,10 @@
 
 namespace controller;
 
-
 use framework\DIContainer;
 
 class AbstractController extends DIContainer
 {
     protected $request = null;
-    protected $model =  null;
+    protected $model = null;
 }

@@ -8,21 +8,22 @@
 
 namespace view;
 
-
 class Project
 {
-    function display($context) {
+    function display($context)
+    {
         include "tmp/Header.php";
         $this->generateBody($context);
         include "tmp/Footer.php";
     }
 
-    function generateBody($context) {
+    function generateBody($context)
+    {
         $_SESSION['user_type'] = 'PM';
-        if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'F') {
+        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'F') {
             include "tmp/ProjectBodyFreelancer.php";
-        } else if(isset($_SESSION['user_type'])) {
-            include "tmp/ProjectBodyCustomer.php"; 
+        } else if (isset($_SESSION['user_type'])) {
+            include "tmp/ProjectBodyCustomer.php";
         }
     }
 }
