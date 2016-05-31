@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`project` (
   `description` VARCHAR(1000) NULL,
   `dedline` DATE NULL,
   `cost` FLOAT NULL,
-  `status` ENUM('N', 'A', 'F') NULL DEFAULT 0,
+  `status` ENUM('N', 'A', 'F') NULL DEFAULT 'N',
   `owner` INT NOT NULL,
   `implementer` INT NULL,
   `reit` TINYINT(100) NULL,

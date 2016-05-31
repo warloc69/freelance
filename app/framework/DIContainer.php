@@ -19,6 +19,9 @@ class DIContainer
             self::$services  = array();
             self::$templates = array();
             $routsConfig     = file_get_contents("..\\app\\di_config.json");
+            if(!$routsConfig) {
+                $routsConfig     = file_get_contents("../app/di_config.json");
+            }
             self::$templates = json_decode($routsConfig, true);
         }
     }

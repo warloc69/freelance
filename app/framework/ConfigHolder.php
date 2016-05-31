@@ -16,6 +16,8 @@ class ConfigHolder
     public static function load()
     {
         self::$info = parse_ini_file("..\\app\\config.ini");
+        if(!self::$info)
+            self::$info = parse_ini_file("../app/config.ini");
     }
 
     /**

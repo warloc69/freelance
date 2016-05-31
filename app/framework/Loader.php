@@ -9,6 +9,9 @@ class ClassLoader
     function __construct()
     {
         $routsConfig   = file_get_contents("..\\app\\class_loader_config.json");
+        if(!$routsConfig) {
+            $routsConfig   = file_get_contents("../app/class_loader_config.json");
+        }
         $this->classes = json_decode($routsConfig, true);
         spl_autoload_register(array($this, 'autoload'));
     }

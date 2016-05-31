@@ -12,6 +12,9 @@ class Route
     function __construct($request)
     {
         $routsConfig = file_get_contents("..\\app\\routs_config.json");
+        if(!$routsConfig) {
+            $routsConfig     = file_get_contents("../app/routs_config.json");
+        }
         $rconfig     = json_decode($routsConfig, true);
         $routs       = $rconfig[$request->getMethod()];
         foreach ($routs as $key => $val) {
