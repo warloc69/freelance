@@ -126,7 +126,7 @@
                     <?php if (!isset($project['id'])) {
                         continue;
                     } ?>
-                    <div class="well" style="display: table">
+                    <div class="well" style="display: table; min-width: 100%;">
                         <div class="col-md-2 ">
                             <a href="/project/<?php echo $project['id']; ?>">
                                 <?php echo $project['name']; ?></a><br>

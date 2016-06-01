@@ -21,7 +21,6 @@ use framework\SmtpMailer;
  * @namespace  controller
  * @author     sivanchenko@mindk.com
  */
-
 class Project extends AbstractController
 {
     /**
@@ -78,10 +77,8 @@ class Project extends AbstractController
         <br>
         <br>
         Comment from freelancer: '.$comment;
-        $headers   = "MIME-Version: 1.0\r\n";
-        $headers .= "Content-type: text/html; charset=utf-8\r\n";
-        $headers .= "From: Admin <freelance@gmail.com>\r\n";
-        $result = $mailer->send($email, 'New bid from freelancer', $text, $headers);
+
+        $result = $mailer->send($email, 'New bid from freelancer', $text);
         if ($result) {
             $bid_info = [
                 "user_id"    => $_SESSION['user_id'],
@@ -118,7 +115,7 @@ class Project extends AbstractController
     }
 
     /**
-     * create new project 
+     * create new project
      */
     function add()
     {
@@ -132,6 +129,23 @@ class Project extends AbstractController
             "status"        => 'N'
         ];
         $project_id   = $this->model->add($project_info);
+        $tags         = explode(',', $this->request->get('tags'));
+        foreach ($tags as $tag) {
+            $tag_criteria = [
+                $this->model->getCriteria('name', '=', $tag)
+            ];
+            $tagInfo      = $this->get('tags.model')->getItem($tag_criteria);
+            if (!$tagInfo) {
+                $tag_id = $this->get('tags.model')->add(["name" => $tag]);
+            } else {
+                $tag_id = $tagInfo['id'];
+            }
+            $project_tags_info = [
+                "project_id" => $project_id,
+                "tag_id"     => $tag_id
+            ];
+            $this->get('tags.model')->addProjectTag($project_tags_info);
+        }
     }
 
     /**
@@ -169,6 +183,26 @@ class Project extends AbstractController
         ];
 
         $this->model->update($project_info, ['id' => $id]);
+
+        $implementer_criteria = [
+            $this->model->getCriteria('id', '=', $bid['user_id']),
+        ];
+
+        $implementer = $this->get('user.model')->getItem($implementer_criteria);
+        $mailer      = new SmtpMailer(
+            ConfigHolder::getConfig('smtp_username'),
+            ConfigHolder::getConfig('smtp_password'),
+            ConfigHolder::getConfig('smtp_host'),
+            ConfigHolder::getConfig('smtp_port')
+        );
+
+        $user_name = $implementer['first_name'];
+        $email     = $implementer['email'];
+        $text      = ' Hello '.$user_name.'! Your Bid was accepted. For looking, go to the link: 
+        <a href="'.ConfigHolder::getConfig('host').'/project/'.$id.'">Project</a>';
+
+        $result = $mailer->send($email, 'Bid accepted', $text);
+
         header('Location: /');
     }
 }

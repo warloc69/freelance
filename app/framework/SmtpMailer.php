@@ -49,8 +49,12 @@ class SmtpMailer
      *
      * @return bool|string true if success
      */
-    function send($mailTo, $subject, $message, $headers)
+    function send($mailTo, $subject, $message)
     {
+        $headers   = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=utf-8\r\n";
+        $headers .= "From: Admin <freelance@gmail.com>\r\n";
+        
         $contentMail = "Date: ".date("D, d M Y H:i:s")." UT\r\n";
         $contentMail .= 'Subject: =?utf-8?B?'.base64_encode($subject)."=?=\r\n";
         $contentMail .= $headers."\r\n";

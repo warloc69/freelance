@@ -43,7 +43,7 @@ class Tag extends QueryBuilder
      */
     function queryColumn()
     {
-        $this->select('tbl.name, tgs.project_id');
+        $this->select('tbl.id, tbl.name, tgs.project_id');
     }
 
     /**
@@ -52,6 +52,15 @@ class Tag extends QueryBuilder
     function queryJoin()
     {
         $this->join('project_tags tgs', 'inner', 'tbl.id=tgs.tag_id');
+    }
+
+    /**
+     * @param $params add new project tags
+     */
+    function addProjectTag($params) {
+        $this->table = 'project_tags';
+        $this->add($params);
+        $this->table = 'tags';
     }
 
 
