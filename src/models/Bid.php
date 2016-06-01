@@ -12,12 +12,10 @@ use framework\QueryBuilder;
 
 class Bid extends QueryBuilder
 {
-    private $request = null;
-
-    function __construct($request)
+    function __construct($db)
     {
         parent::__construct();
-        $this->request = $request;
+        $this->db = $db->getConnection();
         $this->table   = "bids";
     }
 

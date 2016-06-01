@@ -11,11 +11,18 @@ use framework\ConfigHolder;
 
 class Project
 {
-    function display($context)
+    function display($context , $islist = false)
     {
         include "tmp/Header.php";
-        $this->generateBody($context);
+        if($islist) {
+            $this->showList($context);
+        } else {
+            $this->generateBody($context);
+        }
         include "tmp/Footer.php";
+    }
+    function showList($context) {
+        include "tmp/ProjectList.php";
     }
 
     function generateBody($context)
@@ -29,10 +36,7 @@ class Project
             'scope'         => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
         );
         $link   = $url.'?'.urldecode(http_build_query($params));
-
-     //   $_SESSION['user_type'] = 'PM';
-      //  if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'F') {
+        
             include "tmp/ProjectBodyFreelancer.php";
-     //   } 
     }
 }

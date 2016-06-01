@@ -24,7 +24,7 @@
       "service": "project",
       "action": "getList"
     },
-    "#^\/project\/([0-9]+)\/bid\/([0-9]+)$#": {
+    "#^\/project\/([0-9]+)\/bid\/([0-9a-z]+)$#": {
       "service": "project",
       "action": "updateBid"
     },
@@ -38,13 +38,13 @@
       "service": "project",
       "action": "addBid"
     },
-    "#^\/project\/([0-9]+)$#": {
+    "#^\/project$#": {
       "service": "project",
       "action": "add"
     }
   },
   "PUT": {
-    "#^\/project\/([0-9]+)$#": {
+    "#^\/project\/([0-9]+)\/reit\/([0-9]+)$#": {
       "service": "project",
       "action": "statusChange"
     }

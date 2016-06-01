@@ -85,9 +85,7 @@ class QueryBuilder extends Query
         $this->queryOrder();
         if ($singl) {
             $this->queryLimit(0, 1);
-        } else {
-            $this->queryLimit(0, 5);
-        }
+        } 
         $st = $this->db->prepare($this->getQuery());
         $st->execute();
         $result = null;
@@ -117,6 +115,27 @@ class QueryBuilder extends Query
         $statement     = $this->db->prepare($sql);
         $statement->execute($values);
         return $this->db->lastInsertId();
+    }
+
+    function update($params,$where)
+    {
+        $keys          = "";
+        $values        = array();
+        $where_key     = "";
+        foreach ($params as $key => $value) {
+            $keys .= $key.'=:'.$key.',';
+            $values[':'.$key] = $value;
+        }
+        foreach ($where as $key => $value) {
+            $where_key .= $key.'=:'.$key.' AND ';
+            $values[':'.$key] = $value;
+        }
+        $keys          = rtrim($keys, ',');
+        $where_key     = rtrim($where_key, 'AND ');
+        $sql           = "UPDATE ".$this->table." SET ".$keys." WHERE ".$where_key;
+        $statement     = $this->db->prepare($sql);
+        $statement->execute($values);
+        return true;
     }
 
     function getCriteria($field, $operator, $value)

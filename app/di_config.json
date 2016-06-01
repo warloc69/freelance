@@ -7,6 +7,10 @@
   "constructor": "model\\User",
   "arguments": ["request","db"]
   },
+  "bid.model": {
+    "constructor": "model\\Bid",
+    "arguments": ["db"]
+  },
   "tags.model": {
     "constructor": "model\\Tag",
     "arguments": ["request","db"]

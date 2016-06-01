@@ -244,3 +244,13 @@ th span {
     background-color:transparent !important;
     background-image: none;
 }
+ .container {
+     min-height: 800px;
+ }
+
+ .widget {
+     background-color: floralwhite;
+     z-index: 10;
+     position: fixed;
+     margin: 5px 0 16px 8%;
+ }

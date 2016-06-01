@@ -16,7 +16,8 @@
                 </div>
             </div>
             <button class="btn btn-default center"
-                    id="generate">Send Request</button>
+                    id="generate">Send Request
+            </button>
         </div>
     </div>
 </div>
@@ -24,39 +25,32 @@
 <div id="wrapper" class="container">
     <div id="header" class="row">
         <div id="logo" class="col-md-4">
-            <div class="well">Best<br>Fleelance projects</div>
+            <div class="well">Fleelance projects</div>
         </div>
         <div id="header-content" class="col-md-7">
-            <div class="well"></div>
+            <div class="well"><?php echo $context['name']; ?></div>
         </div>
         <div id="header-content" class="col-md-4">
             <div class="well">
-                <?php if (!isset($_SESSION['user_id'])) : ?>
-                    <a href="<?php echo $link; ?>">Login <br> Authorize</a>
-                <?php else : ?>
-                    <a href="/logout">Logout</a>
-                <?php endif; ?>
+                Budget: <?php echo $context['cost']; ?>
             </div>
         </div>
     </div>
     <div id="category" class="row">
-       <div id="featured" class="col-md-12">
+        <div id="featured" class="col-md-15">
             <div class="row">
-                    <div class="well" style="min-height: 600px;">
-                        <br>
-                        <div>Project name: <?php echo $context['name']; ?></div>
-                        <br>
-                        <div>Description: <?php echo $context['description']; ?></div>
-                        <br>
-                        <div>Budget: <?php echo $context['cost']; ?></div>
-                        <br>
-                        <div>Tags: <?php echo $context['tags']; ?></div>
-                        <br>
+                <div class="well" style="min-height: 600px;">
+                    <br>
+                    <div>Description: <?php echo $context['description']; ?></div>
+                    <br>
+                    <div>Tags: <?php echo $context['tags']; ?></div>
+                    <br>
+                    <div class="list-inline">
                         <div>Deadline: <?php echo $context['dedline']; ?></div>
-                        <br>
                         <div>Expected Reit: <?php echo $context['expected_rait']; ?></div>
-                        <button class="btn btn-default center" id="make-request">Make Request</button>
                     </div>
+                    <button class="btn btn-default center" id="make-request">Make Request</button>
+                </div>
 
             </div>
         </div>

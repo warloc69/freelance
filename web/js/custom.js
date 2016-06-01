@@ -32,6 +32,14 @@ function loadListeners() {
         }
     );
 
+    $('#expected-reit').on('input',
+        function (event) {
+            reitchanged = true;
+            $('#expected-reit-value').text(event.target.value);
+            return true;
+        }
+    );
+
     $('#budget').on('input',
         function () {
             var tagElement = $('#budget');
@@ -120,6 +128,84 @@ function loadListeners() {
     $('#cancel').on('click',
         function () {
             $('#bid-request-form').addClass('no-show');
+            return false;
+        }
+    );
+
+    $('#generate').on('click',
+        function () {
+            var tagElement = $('#comment').val();
+            $.ajax({
+                type: 'POST',
+                url: window.location.href + '/bid',
+                data: {
+                    'comment': tagElement
+                },
+                cache: false,
+                success: function () {
+                    $('#bid-request-form').addClass('no-show');
+                }
+            });
+        }
+    );
+
+    $('.finish').on('click',
+        function (event) {
+            $(this).addClass('deleted');
+            var id = event.target.id;
+            $('#project-id').val(event.target.id);
+            $('#project-estimate-form').removeClass('no-show');
+            return false;
+        }
+    );
+    $('#estimate').on('click',
+        function (event) {
+
+
+            $.ajax({
+                type: 'PUT',
+                url: window.location.href + '/' +$('#project-id').val()+ '/reit/'+$('#reit').val(),
+                cache: false,
+                success: function () {
+                    $('#project-estimate-form').addClass('no-show');
+                    $('#reit-'+$('#project-id').val()).html($('#reit').val());
+                    $('#status-'+$('#project-id').val()).html('Finished');
+                    $('.deleted').remove();
+                }
+            });
+            return false;
+        }
+    );
+    $('#add').on('click',
+        function (event) {
+            $('#project-add-form').removeClass('no-show');
+            return false;
+        }
+    );
+    $('#create').on('click',
+        function () {
+            var name = $('#name')[0].value;
+            var description = $('#description').val();
+            var budget = $('#budget')[0].value;
+            var reit = $('#reit-value').text();
+            var deadline = $('#deadline')[0].value;
+            $.ajax({
+                type: 'POST',
+                url: window.location.href,
+                data: {
+                    'name' : name,
+                    'description':description,
+                    'budget': budget,
+                    'reit':reit,
+                    'deadline':deadline,
+                    'tags':tags.join(',')
+                },
+                cache: false,
+                success: function () {
+                    $('#project-add-form').addClass('no-show');
+                    window.location.reload();
+                }
+            });
             return false;
         }
     );
@@ -239,7 +325,6 @@ function loadListeners() {
             return false;
         }
     );
-    var clipboard = new Clipboard('.copy-to-clipboard-button');
 }
 /**
  *  function submit edit certificate form
