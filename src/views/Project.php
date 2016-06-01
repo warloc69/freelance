@@ -1,16 +1,31 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: warloc
- * Date: 28.05.2016
- * Time: 20:55
+ * File described Project view class
+ *
+ * PHP version 5
+ *
+ * @namespace  view
+ * @author     sivanchenko@mindk.com
  */
 
 namespace view;
+
 use framework\ConfigHolder;
 
+/**
+ *  Project view class
+ *
+ * PHP version 5
+ *
+ * @namespace  view
+ * @author     sivanchenko@mindk.com
+ */
 class Project
 {
+    /**
+     * render html context
+     * @param $context information for rendering
+     */
     function display($context , $islist = false)
     {
         include "tmp/Header.php";
@@ -21,10 +36,19 @@ class Project
         }
         include "tmp/Footer.php";
     }
+    
+    /**
+     * render project list 
+     * @param $context information for rendering
+     */
     function showList($context) {
         include "tmp/ProjectList.php";
     }
 
+    /**
+     * render body html context
+     * @param $context information for rendering
+     */
     function generateBody($context)
     {
         $url = 'https://accounts.google.com/o/oauth2/auth';

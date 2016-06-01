@@ -1,19 +1,36 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: warloc
- * Date: 28.05.2016
- * Time: 21:31
+ * File described User controller class
+ *
+ * PHP version 5
+ *
+ * @namespace  controller
+ * @author     sivanchenko@mindk.com
  */
 
 namespace controller;
 
 use framework\ConfigHolder;
 
+/**
+ *  User controller class
+ *
+ * PHP version 5
+ *
+ * @namespace  controller
+ * @author     sivanchenko@mindk.com
+ */
 class User extends AbstractController
 {
     private $project = null;
 
+    /**
+     * User constructor.
+     *
+     * @param $project
+     * @param $request
+     * @param $model
+     */
     function __construct($project, $request, $model)
     {
         parent::__construct();
@@ -22,18 +39,9 @@ class User extends AbstractController
         $this->model   = $model;
     }
 
-    function getItem()
-    {
-
-        echo "constr : User , action : getItem".$this->request->get('project.id');
-    }
-
-    function getList()
-    {
-        $items = $this->model->getList();
-        echo "constr : User , action : getList".$this->request->get('project.id');
-    }
-
+    /**
+     *  make mane page with Top of freelancer
+     */
     function getTop()
     {
         $criteria[] = $this->model->getCriteria('status', '=', 'N');
@@ -79,6 +87,9 @@ class User extends AbstractController
     }
 
 
+    /**
+     * logout user from system
+     */
     function logout()
     {
         unset($_SESSION['user']);
@@ -86,7 +97,10 @@ class User extends AbstractController
         unset($_SESSION['user_type']);
         header('Location: /');
     }
-
+    
+    /**
+     * authorize or register user 
+     */
     function auth()
     {
         if ($this->request->getDirtyValue('code') != null) {
@@ -122,7 +136,7 @@ class User extends AbstractController
             );
         }
 
-        $_SESSION['user'] = $userInfo;                                 //TODO добавить выбор типа пользователя
+        $_SESSION['user'] = $userInfo;
 
         $user     = [
             "first_name" => explode(" ", $userInfo['name'])[0],
@@ -141,5 +155,13 @@ class User extends AbstractController
             $_SESSION['user_type'] = $item['type'] != null?$item['type']:'PM';
         }
         header('Location: /');
+    }
+
+    /**
+     *  Change user role
+     */
+    function changeRole() {
+        $_SESSION['user_type'] = $this->request->get('user-role');
+        header('Location: /project');
     }
 }

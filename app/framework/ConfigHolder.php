@@ -1,10 +1,23 @@
 <?php
 /**
- * Class for working with getting information about configuration
+ * File described class accessing to config described in app/config.ini
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
  */
 
 namespace framework;
 
+/**
+ * ConfigHolder class for accessing to config described in app/config.ini
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
 class ConfigHolder
 {
     private static $info = array();

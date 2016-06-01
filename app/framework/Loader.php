@@ -1,11 +1,31 @@
 <?php
+/**
+ * File described ClassLoader class
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
+
 namespace framework;
 
+/**
+ * ClassLoader class load class accordingly to mapping in app/class_loader_config.json
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
 class ClassLoader
 {
     private $classes = null;
     private $default = "../app/framework/";
 
+    /**
+     * ClassLoader constructor.
+     */
     function __construct()
     {
         $routsConfig   = file_get_contents("..\\app\\class_loader_config.json");
@@ -16,6 +36,10 @@ class ClassLoader
         spl_autoload_register(array($this, 'autoload'));
     }
 
+    /**
+     * callback function used for autoloading
+     * @param $class class name
+     */
     function autoload($class)
     {
         $className = ltrim($class, '\\');

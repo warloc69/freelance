@@ -1,19 +1,32 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: warloc
- * Date: 28.05.2016
- * Time: 19:15
+ * File described FrontController class
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
  */
 
 namespace framework;
 
+/**
+ * FrontController class
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
 class FrontController
 {
     private $service = null;
     private $action = null;
     private $di = null;
 
+    /**
+     * FrontController constructor.
+     */
     function __construct()
     {
         $this->di = new \framework\DIContainer();
@@ -24,6 +37,9 @@ class FrontController
         $this->execut();
     }
 
+    /**
+     *  function execute action from request
+     */
     function execut()
     {
         if ($this->service != null && $this->action != null) {

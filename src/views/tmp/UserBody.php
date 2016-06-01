@@ -3,16 +3,19 @@
         <div id="logo" class="col-md-4">
             <div class="well">Best<br>Fleelance projects</div>
         </div>
-        <div id="header-content" class="col-md-7">
-            <div class="well"><div><input type="text" name="search" id="search" placeholder="&#128269; Search:"><br></div> </div>
+        <div id="header-content" class="col-md-7 well text-center">
+            Time is Money. We help You to save your time and money. <br>
+            <hr>
         </div>
         <div id="header-content" class="col-md-4">
             <div class="well">
                 <?php if (!isset($_SESSION['user_id'])) : ?>
                     <a href="<?php echo $link; ?>">Login <br> Authorize</a>
                 <?php else : ?>
-                    <a href="/logout">Logout</a>
+                    <a href="/logout">Logout</a><br>
+                    <a href="project">My page</a>
                 <?php endif; ?>
+
             </div>
         </div>
     </div>
@@ -51,7 +54,7 @@
                     <?php if (!isset($project['id'])) {
                         continue;
                     } ?>
-                    <div class="well"><a href="/project/<?php echo $project['id']; ?>">
+                    <div class="well" ><a href="/project/<?php echo $project['id']; ?>">
                             <?php echo $project['name']; ?></a>
                         <br>
                         <div><?php echo $project['tags']; ?></div>

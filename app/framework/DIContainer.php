@@ -1,18 +1,31 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: warloc
- * Date: 28.05.2016
- * Time: 16:45
+ * File described DI container class 
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
  */
 
 namespace framework;
 
+/**
+ * DIContainer class
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
 class DIContainer
 {
     private static $templates = null;
     private static $services = null;
 
+    /**
+     * DIContainer constructor.
+     */
     function __construct()
     {
         if (self::$templates == null) {
@@ -26,6 +39,11 @@ class DIContainer
         }
     }
 
+    /**
+     * Function returns service accordingly to config app/di_config.json
+     * 
+     * @param $service string name of service
+     */
     function get($service)
     {
         $constructor = self::$templates[$service]["constructor"];

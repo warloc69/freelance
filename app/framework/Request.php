@@ -1,12 +1,32 @@
 <?php
+/**
+ * File described Request class for accessing  and validation request information
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
+
 namespace framework;
 
 /**
- *  class for accessing  and validation request information
+ *  Request class for accessing  and validation request information
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
  */
 
 class Request
 {
+    /**
+     *  return item from request 
+     * @param $value
+     *
+     * @return null|string
+     */
     function get($value)
     {
         $ids = explode('.', $value);
@@ -30,6 +50,12 @@ class Request
         return $txt;
     }
 
+    /**
+     *  return item from request without deleting any special chars
+     * @param $value
+     *
+     * @return null|string
+     */
     function getDirtyValue($value)
     {
         $result = null;
@@ -39,11 +65,19 @@ class Request
         return $result;
     }
 
+    /**
+     * Return request method
+     * @return mixed
+     */
     function getMethod()
     {
         return $_SERVER["REQUEST_METHOD"];
     }
 
+    /**
+     * Return Uri
+     * @return mixed
+     */
     function getUri()
     {
         return $_SERVER["REQUEST_URI"];

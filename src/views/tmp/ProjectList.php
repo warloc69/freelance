@@ -63,19 +63,22 @@
 <div id="wrapper" class="container">
     <div id="header" class="row">
         <div id="logo" class="col-md-4">
-            <div class="well">Best<br>Fleelance projects</div>
+            <div class="well">Best<br><br>Fleelance projects</div>
         </div>
         <div id="header-content" class="col-md-7 well text-center">
             Time is Money. We help You to save your time and money. <br>
             <hr>
-            <label class="radio-inline "><input type="radio"
-                    <?php if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == "PM") : ?>
-                        checked
-                    <?php endif; ?> name="user-role">Project Manager</label>
-            <label class="radio-inline"><input type="radio"
-                    <?php if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == "F") : ?>
-                        checked
-                    <?php endif; ?> name="user-role">Freelancer</label>
+            <form action="/changerole" method="post">
+                <label class="radio-inline "><input type="radio"
+                        <?php if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == "PM") : ?>
+                            checked
+                        <?php endif; ?> name="user-role" value="PM">Project Manager</label>
+                <label class="radio-inline"><input type="radio"
+                        <?php if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == "F") : ?>
+                            checked
+                        <?php endif; ?> name="user-role" value="F">Freelancer</label>
+                <input type="submit" value="Change">
+            </form>
         </div>
         <div id="header-content" class="col-md-4">
             <div class="well">
@@ -83,6 +86,7 @@
                     <a href="<?php echo $link; ?>">Login <br> Authorize</a>
                 <?php else : ?>
                     <a href="/logout">Logout</a> <br> <br>
+                    <a href="/">Home</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -122,7 +126,7 @@
                     <?php if (!isset($project['id'])) {
                         continue;
                     } ?>
-                    <div class="well">
+                    <div class="well" style="display: table">
                         <div class="col-md-2 ">
                             <a href="/project/<?php echo $project['id']; ?>">
                                 <?php echo $project['name']; ?></a><br>

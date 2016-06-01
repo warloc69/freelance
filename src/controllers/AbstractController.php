@@ -1,14 +1,25 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: warloc
- * Date: 29.05.2016
- * Time: 12:59
+ * File described AbstractController class 
+ *
+ * PHP version 5
+ *
+ * @namespace  controller
+ * @author     sivanchenko@mindk.com
  */
 
 namespace controller;
 
 use framework\DIContainer;
+
+/**
+ *  AbstractController class base class for all controllers
+ *
+ * PHP version 5
+ *
+ * @namespace  controller
+ * @author     sivanchenko@mindk.com
+ */
 
 class AbstractController extends DIContainer
 {

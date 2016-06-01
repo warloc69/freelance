@@ -1,16 +1,30 @@
 <?php
+/**
+ * File described class accessing to for accessing to db
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
 
 namespace framework;
 
+/**
+ * ConfigHolder class for accessing to db
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
 class Db
 {
     private $connection = null;
 
     /**
-     *returns connection to DB
-     * $db_server - connection string. example = "mysql:host=localhost;dbname=students"
-     * $db_user - user name
-     * $db_pass - password
+     * Db constructor.
+     * used configuration from ConfigHolder
      */
     public function __construct()
     {
@@ -28,6 +42,9 @@ class Db
         }
     }
 
+    /**
+     * Function returns connection to DB
+     */
     function getConnection()
     {
         return $this->connection;

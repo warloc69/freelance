@@ -41,6 +41,10 @@
     "#^\/project$#": {
       "service": "project",
       "action": "add"
+    },
+    "#^\/changerole$#": {
+      "service": "user",
+      "action": "changeRole"
     }
   },
   "PUT": {

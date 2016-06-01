@@ -1,9 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: warloc
- * Date: 28.05.2016
- * Time: 20:49
+ * File described Project controller class
+ *
+ * PHP version 5
+ *
+ * @namespace  controller
+ * @author     sivanchenko@mindk.com
  */
 
 namespace controller;
@@ -11,14 +13,32 @@ namespace controller;
 use framework\ConfigHolder;
 use framework\SmtpMailer;
 
+/**
+ *  Project controller class
+ *
+ * PHP version 5
+ *
+ * @namespace  controller
+ * @author     sivanchenko@mindk.com
+ */
+
 class Project extends AbstractController
 {
+    /**
+     * Project constructor.
+     *
+     * @param $request
+     * @param $model
+     */
     function __construct($request, $model)
     {
         $this->request = $request;
         $this->model   = $model;
     }
 
+    /**
+     * return project
+     */
     function getItem()
     {
         $criteria = [$this->model->getCriteria('id', '=', $this->request->get('project.id'))];
@@ -32,6 +52,10 @@ class Project extends AbstractController
         $this->get("project.view")->display($pr);
     }
 
+    /**
+     * Create new bid form freelancer
+     * and sent email to project owner
+     */
     function addBid()
     {
         $id       = $this->request->get('project.id');
@@ -69,6 +93,9 @@ class Project extends AbstractController
         die($result);
     }
 
+    /**
+     * Make list with project
+     */
     function getList()
     {
         $this->model->resetContext();
@@ -90,6 +117,9 @@ class Project extends AbstractController
         $this->get("project.view")->display($pr, true);
     }
 
+    /**
+     * create new project 
+     */
     function add()
     {
         $project_info = [
@@ -104,6 +134,9 @@ class Project extends AbstractController
         $project_id   = $this->model->add($project_info);
     }
 
+    /**
+     * change status to Finished for project
+     */
     function statusChange()
     {
         $id           = $this->request->get('project.id');
@@ -115,6 +148,9 @@ class Project extends AbstractController
         $this->model->update($project_info, ['id' => $id]);
     }
 
+    /**
+     * Change status to Active for project and set implementer for project
+     */
     function updateBid()
     {
         $id    = $this->request->get('project.id');
@@ -133,5 +169,6 @@ class Project extends AbstractController
         ];
 
         $this->model->update($project_info, ['id' => $id]);
+        header('Location: /');
     }
 }

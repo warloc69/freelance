@@ -1,13 +1,23 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: warloc
- * Date: 28.05.2016
- * Time: 22:08
+ * File described Query class
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
  */
 
 namespace framework;
 
+/**
+ * Query class represent query to database
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
 class Query extends DIContainer
 {
     protected $query = "";
@@ -21,6 +31,9 @@ class Query extends DIContainer
     protected $group = "";
     protected $table = "";
 
+    /**
+     *  function build where part of query
+     */
     function where($name, $operation, $value)
     {
         if (empty($this->where)) {
@@ -35,12 +48,18 @@ class Query extends DIContainer
         }
     }
 
+    /**
+     *  function build join part of query
+     */
     function join($name, $type, $value)
     {
         $this->join .= $type.' join ';
         $this->join .= $name.' on '.$value.' ';
     }
 
+    /**
+     *  function build order part of query
+     */
     function order($name)
     {
         if (empty($this->order)) {
@@ -51,17 +70,26 @@ class Query extends DIContainer
         $this->order .= $name.' ';
     }
 
+    /**
+     *  function build group part of query
+     */
     function group($field)
     {
         $this->group .= 'GROUP BY '.$field.' ';
     }
 
+    /**
+     *  function build having part of query
+     */
     function having($field, $operation, $function)
     {
         $this->having .= $function.' '.$operation.' '.$field;
         $this->select .= $function.' res_having ';
     }
 
+    /**
+     *  function build limit part of query
+     */
     function limit($start, $offset)
     {
         if (empty($this->limit)) {
@@ -69,6 +97,9 @@ class Query extends DIContainer
         }
     }
 
+    /**
+     *  function build select part of query
+     */
     function select($name)
     {
         if (empty($this->select)) {
@@ -77,6 +108,9 @@ class Query extends DIContainer
         $this->select .= $name.' ';
     }
 
+    /**
+     *  function build full query
+     */
     function getQuery()
     {
         $this->query
@@ -90,6 +124,9 @@ class Query extends DIContainer
         return $this->query;
     }
 
+    /**
+     *  function reset query
+     */
     function resetContext()
     {
         $this->query  = '';

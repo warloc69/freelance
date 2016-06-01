@@ -1,42 +1,61 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: warloc
- * Date: 28.05.2016
- * Time: 21:49
+ * File described QueryBuilder class
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
  */
 
 namespace framework;
 
+/**
+ * QueryBuilder class using for execute query
+ *
+ * PHP version 5
+ *
+ * @namespace  framework
+ * @author     sivanchenko@mindk.com
+ */
 class QueryBuilder extends Query
 {
-    private $params = array();
     protected $db = null;
     protected $limit_start = 0;
     protected $limit_offset = 5;
 
-    function setState($name, $value)
-    {
-        $this->params[$name] = $value;
-        return $this;
-    }
 
+    /**
+     * function used for build join section from part
+     */
     function queryJoin()
     {
     }
 
+    /**
+     * function used for build having section from part
+     */
     function queryHaving()
     {
     }
 
+    /**
+     * function used for build group section from part
+     */
     function queryGroup()
     {
     }
 
+    /**
+     * function used for build order section from part
+     */
     function queryOrder()
     {
     }
 
+    /**
+     * function used for build where section from part
+     */
     function queryWhere($info)
     {
         foreach ($info as $criteria) {
@@ -44,26 +63,47 @@ class QueryBuilder extends Query
         }
     }
 
+    /**
+     * function used for build select section from part
+     */
     function queryColumn()
     {
         $this->select('*');
     }
 
+    /**
+     * function used for build limit section
+     */
     function queryLimit($limit_start, $limit_offset)
     {
         $this->limit($limit_start, $limit_offset);
     }
 
+    /**
+     * function return item from database
+     * 
+     * @info array created accordingly to getCriteria method
+     */
     function getItem($info)
     {
         return $this->getResult($info);
     }
 
+    /**
+     * function return List from database
+     *
+     * @info array created accordingly to getCriteria method , can be ignored, default empty
+     */
     function getList($info = [])
     {
         return $this->getResult($info, false);
     }
 
+    /**
+     * function return total from database
+     *
+     * @info array created accordingly to getCriteria method
+     */
     function getTotal($info)
     {
         $this->resetContext();
@@ -75,6 +115,12 @@ class QueryBuilder extends Query
         return $st->fetch(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * function return result of select from database
+     *
+     * @param info array created accordingly to getCriteria method
+     * @param singl if true return item else list, default true
+     */
     function getResult($info, $singl = true)
     {
         $this->queryColumn();
@@ -85,7 +131,7 @@ class QueryBuilder extends Query
         $this->queryOrder();
         if ($singl) {
             $this->queryLimit(0, 1);
-        } 
+        }
         $st = $this->db->prepare($this->getQuery());
         $st->execute();
         $result = null;
@@ -98,6 +144,12 @@ class QueryBuilder extends Query
         return $result;
     }
 
+    /**
+     * function insert item to database
+     * @param $params array key => value
+     *
+     * @return id of new item
+     */
     function add($params)
     {
         $keys          = "";
@@ -117,11 +169,17 @@ class QueryBuilder extends Query
         return $this->db->lastInsertId();
     }
 
-    function update($params,$where)
+    /**
+     * function update item in database
+     * @param $params array key => value
+     * @param $where array key => value
+     *
+     */
+    function update($params, $where)
     {
-        $keys          = "";
-        $values        = array();
-        $where_key     = "";
+        $keys      = "";
+        $values    = array();
+        $where_key = "";
         foreach ($params as $key => $value) {
             $keys .= $key.'=:'.$key.',';
             $values[':'.$key] = $value;
@@ -130,14 +188,22 @@ class QueryBuilder extends Query
             $where_key .= $key.'=:'.$key.' AND ';
             $values[':'.$key] = $value;
         }
-        $keys          = rtrim($keys, ',');
-        $where_key     = rtrim($where_key, 'AND ');
-        $sql           = "UPDATE ".$this->table." SET ".$keys." WHERE ".$where_key;
-        $statement     = $this->db->prepare($sql);
+        $keys      = rtrim($keys, ',');
+        $where_key = rtrim($where_key, 'AND ');
+        $sql       = "UPDATE ".$this->table." SET ".$keys." WHERE ".$where_key;
+        $statement = $this->db->prepare($sql);
         $statement->execute($values);
         return true;
     }
 
+    /**
+     * function make criteria for select 
+     * @param $field
+     * @param $operator
+     * @param $value
+     *
+     * @return array
+     */
     function getCriteria($field, $operator, $value)
     {
         return [
