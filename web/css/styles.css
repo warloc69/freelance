@@ -67,7 +67,7 @@ a.tag-list-drop {
 
 .ui-datepicker,
 .ui-datepicker-calendar {
-    background-color: #fff !important;
+    background-color: #0a758c !important;
 }
 
 .ui-datepicker-next {
@@ -165,6 +165,12 @@ th span {
 a {
     color: #00145c;
     text-decoration: none;
+}
+#deadline {
+    color: #0f0f0f;
+}
+input {
+    color: #000
 }
 
 ::-webkit-input-placeholder {color: #23527c;}

@@ -138,6 +138,12 @@ function loadListeners() {
     $('#generate').on('click',
         function () {
             var tagElement = $('#comment').val();
+            if(tagElement.length < 50) {
+                $('#comment').addClass('invalid');
+                return false;
+            } else {
+                $('#comment').removeClass('invalid');
+            }
             $.ajax({
                 type: 'POST',
                 url: window.location.href + '/bid',
