@@ -119,7 +119,11 @@ function loadListeners() {
 
     $('#make-request').on('click',
         function () {
-            $('#bid-request-form').removeClass('no-show');
+            if(!$('#logined').length) {
+                window.location.href = "https://accounts.google.com/o/oauth2/auth?redirect_uri=http://lance.local.com/auth&response_type=code&client_id=663315718006-67cmagfdoitr0i3ra6c2bsj4vllbno8k.apps.googleusercontent.com&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile";
+            } else {
+                $('#bid-request-form').removeClass('no-show');
+            }
             return false;
         }
     );

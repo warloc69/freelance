@@ -36,6 +36,8 @@ class Route
         }
         $rconfig     = json_decode($routsConfig, true);
         $routs       = $rconfig[$request->getMethod()];
+        $this->service = 'default';
+        $this->action = '_actionDefault';
         foreach ($routs as $key => $val) {
             if (preg_match($key, $request->getUri()) === 1) {
                 $this->service = $val["service"];

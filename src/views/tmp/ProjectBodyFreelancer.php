@@ -7,6 +7,9 @@
                     <h2 class="header">Project: <?php echo $context['name']; ?></h2>
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
+                            <?php if (isset($_SESSION['user_type'])): ?>
+                                <input type="hidden" name="logined" id="logined">
+                            <?php endif; ?>
                             <label class="control-label col-sm-5" for="comment">Comment: </label>
                             <div class="col-sm-15">
                                 <textarea class="form-control" rows="5" id="comment"></textarea>
@@ -21,11 +24,10 @@
         </div>
     </div>
 </div>
-<!----------------------------------------------------------------->
 <div id="wrapper" class="container">
     <div id="header" class="row">
         <div id="logo" class="col-md-4">
-            <div class="well">Fleelance projects</div>
+            <div class="well">Freelance projects</div>
         </div>
         <div id="header-content" class="col-md-7">
             <div class="well"><?php echo $context['name']; ?></div>
@@ -49,7 +51,9 @@
                         <div>Deadline: <?php echo $context['dedline']; ?></div>
                         <div>Expected Reit: <?php echo $context['expected_rait']; ?></div>
                     </div>
-                    <button class="btn btn-default center" id="make-request">Make Request</button>
+                    <?php if (isset($context['status']) && $context['status'] != 'F') : ?>
+                        <button class="btn btn-default center" id="make-request">Make Request</button>
+                    <?php endif; ?>
                 </div>
 
             </div>
@@ -59,5 +63,4 @@
         $(window).load(function () {
             loadListeners();
         });
-
     </script>

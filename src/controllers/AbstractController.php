@@ -1,6 +1,6 @@
 <?php
 /**
- * File described AbstractController class 
+ * File described AbstractController class
  *
  * PHP version 5
  *
@@ -20,7 +20,6 @@ use framework\DIContainer;
  * @namespace  controller
  * @author     sivanchenko@mindk.com
  */
-
 class AbstractController extends DIContainer
 {
     protected $request = null;

@@ -3,6 +3,14 @@
     "constructor": "controller\\User",
     "arguments": ["project.model","request","user.model"]
   },
+  "default": {
+    "constructor": "controller\\DefaultController",
+    "arguments": []
+  },
+  "default.view": {
+    "constructor": "view\\DefaultView",
+    "arguments": []
+  },
   "user.model": {
   "constructor": "model\\User",
   "arguments": ["request","db"]

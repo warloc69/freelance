@@ -36,8 +36,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`project` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `description` VARCHAR(1000) NULL,
+  `name` VARCHAR(150) NULL,
+  `description` VARCHAR(2000) NULL,
   `dedline` DATE NULL,
   `cost` FLOAT NULL,
   `status` ENUM('N', 'A', 'F') NULL DEFAULT 'N',
@@ -113,6 +113,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`project_tags` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+ALTER TABLE `mydb`.`users` AUTO_INCREMENT = 1;
+ALTER TABLE `mydb`.`project` AUTO_INCREMENT = 1;
+ALTER TABLE `mydb`.`tags` AUTO_INCREMENT = 1;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

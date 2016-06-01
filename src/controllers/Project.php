@@ -95,6 +95,9 @@ class Project extends AbstractController
      */
     function getList()
     {
+        if(!isset($_SESSION['user_id'])) {
+            header('Location: '.ConfigHolder::getConfig('google_autorize'));
+        }
         $this->model->resetContext();
         $criteria = [];
         if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'PM') {

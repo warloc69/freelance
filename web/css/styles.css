@@ -1,7 +1,7 @@
 body {
     font-size: 14px;
-    background-image: linear-gradient(rgb(5, 5, 5), rgb(0, 41, 48));
-    color :#73487A;
+    background-image: linear-gradient(rgb(36, 104, 170), rgb(40, 51, 72));
+    color :#FFF;
 }
 
 .content {
@@ -148,7 +148,7 @@ th span {
 }
 
  .well {
-    background-color:transparent !important;
+     background-color: rgba(47, 184, 221, 0.36) !important;
     background-image: none;
 }
  .container {
@@ -156,8 +156,18 @@ th span {
  }
 
  .widget {
-     background-color: floralwhite;
+     background-color: rgba(39, 108, 131, 0.89);
      z-index: 10;
      position: fixed;
      margin: 5px 0 16px 8%;
  }
+
+a {
+    color: #00145c;
+    text-decoration: none;
+}
+
+::-webkit-input-placeholder {color: #23527c;}
+::-moz-placeholder          {color:#23527c;}/* Firefox 19+ */
+:-moz-placeholder           {color:#23527c;}/* Firefox 18- */
+:-ms-input-placeholder      {color:#23527c;}
