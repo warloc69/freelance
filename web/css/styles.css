@@ -1,50 +1,15 @@
-
-
 body {
     font-size: 14px;
     background-image: linear-gradient(rgb(5, 5, 5), rgb(0, 41, 48));
     color :#73487A;
-    /*padding-top: 150px;*/
-}
-
-.option-green {
-    color: #03ba00;
 }
 
 .content {
-    /*text-align: center;*/
     display: inline-block;
 }
 
 .title {
     font-size: 96px;
-}
-
-.navbar-header {
-    float: left;
-    padding: 15px;
-    width: 100%;
-}
-
-.navbar-brand {
-    float: none;
-}
-
-.navbar-inverse .navbar-brand {
-    color: #fff;
-}
-
-.navbar-nav > li > a {
-    padding-top: 5px;
-    padding-bottom: 4px;
-}
-
-.button-b {
-    color: #000;
-}
-
-.btn-info {
-    margin: 0 18px 11px;
 }
 
 .form-control {
@@ -53,52 +18,12 @@ body {
     border: 0;
 }
 
-.table > thead > tr > th,
-.table > tbody > tr > th,
-.table > tfoot > tr > th,
-.table > thead > tr > td,
-.table > tbody > tr > td,
-.table > tfoot > tr > td {
-    vertical-align: inherit;
-}
-
-th, td {
-    text-align: center;
-}
-
-.navbar-inverse {
-    z-index: 5;
-    background-image: linear-gradient(to bottom, #3c3c3c 0, #1CAEE5 100%);
-}
-
-.searcher {
-    display: inline-block;
-    width: 100%;
-    padding-bottom: 30px;
-}
-
-.search {
-    float: left;
-    width: 40%;
-    background-color: #ebebeb;
-}
-
 .pagination {
     width: 37%;
     margin: 0;
 }
 
-.logo {
-    position: absolute;
-    padding: 0px 27%;
-}
-
-.logo img {
-    width: 142px;
-    padding: 25px 0;
-}
-
-.group-add-form, .bid-request-form, .certificate-edit-form {
+.bid-request-form {
     position: absolute;
     z-index: 10;
     background-color: rgba(131, 133, 143, 0.84);
@@ -136,10 +61,6 @@ a.tag-list-drop {
     overflow-y: auto;
 }
 
-.name-block {
-    margin: 24px 0;
-}
-
 .no-show {
     display: none;
 }
@@ -173,10 +94,6 @@ th span {
 .invalid {
     border-color: #FF0000;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
-}
-
-.search {
-    width: 22%;
 }
 
 .pagination {
@@ -225,16 +142,6 @@ th span {
     box-shadow: none;
 }
 
-.main-container {
-    width: 1300px;
-}
-.hide-url {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    font-size: 0;
-    position: absolute;
-}
 .tag-item {
     background-color: #fff;
 
