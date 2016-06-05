@@ -114,7 +114,8 @@ class Project extends AbstractController
             }
             $pr[$key]["tags"] = rtrim($tags, ',');
         }
-        $this->get("project.view")->display($pr, true);
+        $pr["isList"] = true;
+        $this->get("project.view")->display($pr);
     }
 
     /**
@@ -129,7 +130,8 @@ class Project extends AbstractController
             "cost"          => $this->request->get('budget'),
             "owner"         => $_SESSION['user_id'],
             "expected_rait" => $this->request->get('reit'),
-            "status"        => 'N'
+            "status"        => 'N',
+            "created_at"    => date('Y-m-d')
         ];
         $project_id   = $this->model->add($project_info);
         $tags         = explode(',', $this->request->get('tags'));
@@ -208,4 +210,5 @@ class Project extends AbstractController
 
         header('Location: /');
     }
+    
 }

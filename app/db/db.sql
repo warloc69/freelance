@@ -10,18 +10,18 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `test_lab_sivancehnko_zzz_com_ua` ;
+DROP SCHEMA IF EXISTS `mydb` ;
 
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `test_lab_sivancehnko_zzz_com_ua` DEFAULT CHARACTER SET utf8 ;
-USE `test_lab_sivancehnko_zzz_com_ua` ;
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `test_lab_sivancehnko_zzz_com_ua`.`users` (
+CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `first_name` VARCHAR(100) NULL,
   `last_name` VARCHAR(100) NULL,
   `email` VARCHAR(100) NULL,
@@ -34,11 +34,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`project`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `test_lab_sivancehnko_zzz_com_ua`.`project` (
+CREATE TABLE IF NOT EXISTS `mydb`.`project` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(150) NULL,
   `description` VARCHAR(2000) NULL,
   `dedline` DATE NULL,
+  `created_at` DATE NULL,
   `cost` FLOAT NULL,
   `status` ENUM('N', 'A', 'F') NULL DEFAULT 'N',
   `owner` INT NOT NULL,
@@ -50,12 +51,12 @@ CREATE TABLE IF NOT EXISTS `test_lab_sivancehnko_zzz_com_ua`.`project` (
   INDEX `fk_project_users2_idx` (`implementer` ASC),
   CONSTRAINT `fk_project_users1`
     FOREIGN KEY (`owner`)
-    REFERENCES `test_lab_sivancehnko_zzz_com_ua`.`users` (`id`)
+    REFERENCES `mydb`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_project_users2`
     FOREIGN KEY (`implementer`)
-    REFERENCES `test_lab_sivancehnko_zzz_com_ua`.`users` (`id`)
+    REFERENCES `mydb`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -64,7 +65,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`bids`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `test_lab_sivancehnko_zzz_com_ua`.`bids` (
+CREATE TABLE IF NOT EXISTS `mydb`.`bids` (
   `user_id` INT NOT NULL,
   `project_id` INT NOT NULL,
   `token` MEDIUMTEXT NULL,
@@ -72,12 +73,12 @@ CREATE TABLE IF NOT EXISTS `test_lab_sivancehnko_zzz_com_ua`.`bids` (
   INDEX `fk_bids_project1_idx` (`project_id` ASC),
   CONSTRAINT `fk_bids_users1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `test_lab_sivancehnko_zzz_com_ua`.`users` (`id`)
+    REFERENCES `mydb`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_bids_project1`
     FOREIGN KEY (`project_id`)
-    REFERENCES `test_lab_sivancehnko_zzz_com_ua`.`project` (`id`)
+    REFERENCES `mydb`.`project` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -86,7 +87,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`tags`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `test_lab_sivancehnko_zzz_com_ua`.`tags` (
+CREATE TABLE IF NOT EXISTS `mydb`.`tags` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -96,26 +97,26 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`project_tags`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `test_lab_sivancehnko_zzz_com_ua`.`project_tags` (
+CREATE TABLE IF NOT EXISTS `mydb`.`project_tags` (
   `project_id` INT NOT NULL,
   `tag_id` INT NOT NULL,
   PRIMARY KEY (`project_id`, `tag_id`),
   INDEX `fk_project_tags_tags1_idx` (`tag_id` ASC),
   CONSTRAINT `fk_project_tags_project1`
     FOREIGN KEY (`project_id`)
-    REFERENCES `test_lab_sivancehnko_zzz_com_ua`.`project` (`id`)
+    REFERENCES `mydb`.`project` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_project_tags_tags1`
     FOREIGN KEY (`tag_id`)
-    REFERENCES `test_lab_sivancehnko_zzz_com_ua`.`tags` (`id`)
+    REFERENCES `mydb`.`tags` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-ALTER TABLE `test_lab_sivancehnko_zzz_com_ua`.`users` AUTO_INCREMENT = 1;
-ALTER TABLE `test_lab_sivancehnko_zzz_com_ua`.`project` AUTO_INCREMENT = 1;
-ALTER TABLE `test_lab_sivancehnko_zzz_com_ua`.`tags` AUTO_INCREMENT = 1;
+ALTER TABLE `mydb`.`users` AUTO_INCREMENT = 1;
+ALTER TABLE `mydb`.`project` AUTO_INCREMENT = 1;
+ALTER TABLE `mydb`.`tags` AUTO_INCREMENT = 1;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

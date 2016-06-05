@@ -51,6 +51,7 @@ class QueryBuilder extends Query
      */
     function queryOrder()
     {
+        $this->order("created_at desc");
     }
 
     /**
