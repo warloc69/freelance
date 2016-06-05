@@ -27,7 +27,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `email` VARCHAR(100) NULL,
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` ENUM('F', 'PM') NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  INDEX `email_idx` (`email` ASC)
+)
 ENGINE = InnoDB;
 
 
@@ -47,8 +49,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`project` (
   `reit` TINYINT(100) NULL,
   expected_rait tinyint(100) null,
   PRIMARY KEY (`id`),
-  INDEX `fk_project_users1_idx` (`owner` ASC),
-  INDEX `fk_project_users2_idx` (`implementer` ASC),
+  INDEX `fk_project_users1_idx` (`owner`),
+  INDEX `deadline_ix` (`dedline`),
+  INDEX `cost_ix` (`cost`),
+  INDEX `reit_ix` (`expected_rait`),
+  INDEX `fk_project_users2_idx` (`implementer`),
   CONSTRAINT `fk_project_users1`
     FOREIGN KEY (`owner`)
     REFERENCES `mydb`.`users` (`id`)
@@ -68,9 +73,10 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`bids` (
   `user_id` INT NOT NULL,
   `project_id` INT NOT NULL,
-  `token` MEDIUMTEXT NULL,
+  `token` varchar(200) NULL,
   PRIMARY KEY (`user_id`, `project_id`),
   INDEX `fk_bids_project1_idx` (`project_id` ASC),
+  INDEX `token_idx` (`token`),
   CONSTRAINT `fk_bids_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`users` (`id`)
@@ -90,7 +96,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`tags` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  INDEX `name_idx` (`name`))
 ENGINE = InnoDB;
 
 

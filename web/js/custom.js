@@ -120,7 +120,7 @@ function loadListeners() {
     $('#make-request').on('click',
         function () {
             if(!$('#logined').length) {
-                window.location.href = "https://accounts.google.com/o/oauth2/auth?redirect_uri=http://lance.local.com/auth&response_type=code&client_id=663315718006-67cmagfdoitr0i3ra6c2bsj4vllbno8k.apps.googleusercontent.com&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile";
+                window.location.href = "/login?project_url="+document.location.href;
             } else {
                 $('#bid-request-form').removeClass('no-show');
             }

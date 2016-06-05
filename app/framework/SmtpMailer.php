@@ -21,24 +21,58 @@ namespace framework;
 
 class SmtpMailer
 {
-    public $smtp_username;
-    public $smtp_password;
-    public $smtp_host;
-    public $smtp_port;
+    private $smtp_username;
+    private $smtp_password;
+    private $smtp_host;
+    private $smtp_port;
     const CODE_OK = "220";
     const CODE_OPERATION_FINISHED = "250";
     const CODE_AUTORIZATION_ACCEPTED = "334";
     const CODE_PASSWORD_ACCEPTED = "235";
     const CODE_READY_FOR_BODY = "354";
 
-    public function __construct($smtp_username, $smtp_password, $smtp_host, $smtp_port = 25)
+    public function __construct()
     {
-        $this->smtp_username = $smtp_username;
-        $this->smtp_password = $smtp_password;
-        $this->smtp_host     = $smtp_host;
-        $this->smtp_port     = $smtp_port;
+        $this->smtp_username = ConfigHolder::getConfig('smtp_username');
+        $this->smtp_password = ConfigHolder::getConfig('smtp_password');
+        $this->smtp_host     = ConfigHolder::getConfig('smtp_host');
+        $this->smtp_port     = ConfigHolder::getConfig('smtp_port');
     }
 
+    /**
+     * send new bid to email
+     * 
+     * @param $first_name
+     * @param $email
+     * @param $project_id
+     * @param $bid_id
+     * @param $comment
+     *
+     * @return bool|string
+     */
+    public function sendNewBid($first_name,$email,$project_id,$bid_id,$comment){
+        $text      = ' Hello '.$first_name.'! You took new bid. For accepting proposition, go to the link: 
+        <a href="'.ConfigHolder::getConfig('host').'/project/'.$project_id.'/bid/'.$bid_id.'">accept bid</a>
+        <br>
+        <br>
+        Comment from freelancer: '.$comment;
+        return $this->send($email, 'New bid from freelancer', $text);
+    }
+
+    /**
+     *  send accept bid to mail
+     * @param $implementer
+     * @param $email
+     * @param $project_id
+     *
+     * @return bool|string
+     */
+    public function sendBidAccept($implementer,$email,$project_id){
+        $text      = ' Hello '.$implementer.'! Your Bid was accepted. For looking, go to the link: 
+        <a href="'.ConfigHolder::getConfig('host').'/project/'.$project_id.'">Project</a>';
+
+        return $this->send($email, 'Bid accepted', $text);
+    }
     /**
      * send email
      *
@@ -49,7 +83,7 @@ class SmtpMailer
      *
      * @return bool|string true if success
      */
-    function send($mailTo, $subject, $message)
+    private function send($mailTo, $subject, $message)
     {
         $headers   = "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=utf-8\r\n";

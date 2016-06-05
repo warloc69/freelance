@@ -45,7 +45,7 @@ class Db
     /**
      * Function returns connection to DB
      */
-    function getConnection()
+    public function getConnection()
     {
         return $this->connection;
     }

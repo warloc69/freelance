@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/web/css/styles.css">
 <body>
 <div class="center">
-    <h1 style="padding-left: 30%"> 404. Page not found</h1>
+    <h1 style="padding-left: 30%"> <?php echo $code; ?></h1>
 <img src="/web/img/404.gif">
 
 </div>

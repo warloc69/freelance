@@ -28,7 +28,7 @@ class Route
      *
      * @param $request
      */
-    function __construct($request)
+    public function __construct($request)
     {
         $routsConfig = file_get_contents("..\\app\\routs_config.json");
         if(!$routsConfig) {
@@ -49,7 +49,7 @@ class Route
     /**
      * @return service name
      */
-    function getService()
+    public function getService()
     {
         return $this->service;
     }
@@ -57,7 +57,7 @@ class Route
     /**
      * @return action 
      */
-    function getAction()
+    public function getAction()
     {
         return $this->action;
     }

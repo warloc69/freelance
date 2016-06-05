@@ -22,7 +22,6 @@ use framework\QueryBuilder;
  */
 class User extends QueryBuilder
 {
-    private $request = null;
 
     /**
      * User constructor.
@@ -30,19 +29,17 @@ class User extends QueryBuilder
      * @param $request
      * @param $db
      */
-    function __construct($request, $db)
+    public function __construct($db)
     {
-        parent::__construct();
-        $this->request = $request;
+        parent::__construct($db);
         $this->table   = "users";
-        $this->db      = $db->getConnection();
-        @session_start();
+        
     }
 
     /**
      * function used for build select section from part
      */
-    function queryColumn()
+    protected function queryColumn()
     {
     }
 
@@ -51,7 +48,7 @@ class User extends QueryBuilder
      *
      * @info array created accordingly to getCriteria method
      */
-    function getItem($info)
+    public function getItem($info)
     {
         $this->select('*');
         return parent::getItem($info); 
@@ -60,7 +57,7 @@ class User extends QueryBuilder
     /**
      * function return Top users from database
      */
-    function getTop()
+    public function getTop()
     {
         $this->select(' tbl.first_name, tbl.last_name, avg(prj.reit) avg_reit ');
         $this->join('project prj', 'inner', ' prj.implementer = tbl.id and prj.status = \'F\'');

@@ -1,7 +1,23 @@
 {
+  "session": {
+    "constructor": "framework\\SessionHolder",
+    "arguments": []
+  },
+  "loginManager": {
+    "constructor": "controller\\LoginManager",
+    "arguments": ["session"]
+  },
+  "mailer": {
+    "constructor": "framework\\SmtpMailer",
+    "arguments": []
+  },
+  "response": {
+    "constructor": "framework\\Response",
+    "arguments": []
+  },
   "user": {
     "constructor": "controller\\User",
-    "arguments": ["project.model","request","user.model"]
+    "arguments": ["request","user.model","session"]
   },
   "default": {
     "constructor": "controller\\DefaultController",
@@ -13,7 +29,7 @@
   },
   "user.model": {
   "constructor": "model\\User",
-  "arguments": ["request","db"]
+  "arguments": ["db"]
   },
   "bid.model": {
     "constructor": "model\\Bid",
@@ -21,7 +37,7 @@
   },
   "tags.model": {
     "constructor": "model\\Tag",
-    "arguments": ["request","db"]
+    "arguments": ["db"]
   },
   "user.view": {
     "constructor": "view\\User",
@@ -29,11 +45,11 @@
   },
   "project": {
     "constructor": "controller\\Project",
-    "arguments": ["request","project.model"]
+    "arguments": ["request","project.model","user.model","session"]
   },
   "project.model": {
     "constructor": "model\\Project",
-    "arguments": ["request","db"]
+    "arguments": ["db"]
   },
   "project.view": {
     "constructor": "view\\Project",

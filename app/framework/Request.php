@@ -27,7 +27,7 @@ class Request
      *
      * @return null|string
      */
-    function get($value)
+    public function get($value)
     {
         $ids = explode('.', $value);
         $txt = null;
@@ -56,7 +56,7 @@ class Request
      *
      * @return null|string
      */
-    function getDirtyValue($value)
+    public function getDirtyValue($value)
     {
         $result = null;
         if (isset($_REQUEST[$value])) {
@@ -69,7 +69,7 @@ class Request
      * Return request method
      * @return mixed
      */
-    function getMethod()
+    public function getMethod()
     {
         return $_SERVER["REQUEST_METHOD"];
     }
@@ -78,7 +78,7 @@ class Request
      * Return Uri
      * @return mixed
      */
-    function getUri()
+    public function getUri()
     {
         return $_SERVER["REQUEST_URI"];
     }

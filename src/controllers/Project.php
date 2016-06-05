@@ -29,16 +29,18 @@ class Project extends AbstractController
      * @param $request
      * @param $model
      */
-    function __construct($request, $model)
+    public function __construct($request, $model, $user, $session)
     {
         $this->request = $request;
         $this->model   = $model;
+        $this->user    = $user;
+        $this->session = $session;
     }
 
     /**
      * return project
      */
-    function getItem()
+    public function getItem()
     {
         $criteria = [$this->model->getCriteria('id', '=', $this->request->get('project.id'))];
         $pr       = $this->model->getItem($criteria);
@@ -48,6 +50,9 @@ class Project extends AbstractController
             $tags .= ' '.$tag['name'].',';
         }
         $pr["tags"] = rtrim($tags, ',');
+        $pr["type"] = "P";
+        $pr["user_type"] = $this->session->getUserType();
+        $pr["user_id"] = $this->session->getUserId();
         $this->get("project.view")->display($pr);
     }
 
@@ -55,33 +60,18 @@ class Project extends AbstractController
      * Create new bid form freelancer
      * and sent email to project owner
      */
-    function addBid()
+    public function addBid()
     {
         $id       = $this->request->get('project.id');
         $criteria = [$this->model->getCriteria('id', '=', $id)];
         $project  = $this->model->getItem($criteria);
         $bid_id   = uniqid();
         $user     = $this->get('user.model')->getItem([$this->model->getCriteria('id', '=', $project['owner'])]);
-        $comment  = $this->request->get('comment');
-        $mailer   = new SmtpMailer(
-            ConfigHolder::getConfig('smtp_username'),
-            ConfigHolder::getConfig('smtp_password'),
-            ConfigHolder::getConfig('smtp_host'),
-            ConfigHolder::getConfig('smtp_port')
-        );
-
-        $user_name = $user['first_name'];
-        $email     = $user['email'];
-        $text      = ' Hello '.$user_name.'! You took new bid. For accepting proposition, go to the link: 
-        <a href="'.ConfigHolder::getConfig('host').'/project/'.$id.'/bid/'.$bid_id.'">accept bid</a>
-        <br>
-        <br>
-        Comment from freelancer: '.$comment;
-
-        $result = $mailer->send($email, 'New bid from freelancer', $text);
+        $comment  = $this->request->get('comment');             
+        $result = $this->get('mailer')->sendNewBid($user['first_name'],$user['email'],$id,$bid_id,$comment);
         if ($result) {
             $bid_info = [
-                "user_id"    => $_SESSION['user_id'],
+                "user_id"    => $this->session->getUserId(),
                 "project_id" => $id,
                 "token"      => $bid_id
             ];
@@ -93,17 +83,17 @@ class Project extends AbstractController
     /**
      * Make list with project
      */
-    function getList()
+    public function getList()
     {
-        if(!isset($_SESSION['user_id'])) {
-            header('Location: '.ConfigHolder::getConfig('google_autorize'));
+        if(empty($this->session->getUserId())) {
+            $this->get("response")->redirect(ConfigHolder::getConfig('google_autorize'));
         }
         $this->model->resetContext();
         $criteria = [];
-        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'PM') {
-            $criteria[] = $this->model->getCriteria('owner', '=', $_SESSION['user_id']);
+        if ($this->session->getUserType() == 'PM') {
+            $criteria[] = $this->model->getCriteria('owner', '=', $this->session->getUserId());
         } else {
-            $criteria[] = $this->model->getCriteria('implementer', '=', $_SESSION['user_id']);
+            $criteria[] = $this->model->getCriteria('implementer', '=', $this->session->getUserId());
         }
         $pr = $this->model->getList($criteria);
         foreach ($pr as $key => $project) {
@@ -114,21 +104,23 @@ class Project extends AbstractController
             }
             $pr[$key]["tags"] = rtrim($tags, ',');
         }
-        $pr["isList"] = true;
+        $pr["type"] = "MPL";
+        $pr["user_type"] = $this->session->getUserType();
+        $pr["user_id"] = $this->session->getUserId();
         $this->get("project.view")->display($pr);
     }
 
     /**
      * create new project
      */
-    function add()
+    public function add()
     {
         $project_info = [
             "name"          => $this->request->get('name'),
             "description"   => $this->request->get('description'),
             "dedline"       => date('Y-m-d', strtotime(str_replace('.', '/', $this->request->get('deadline')))),
             "cost"          => $this->request->get('budget'),
-            "owner"         => $_SESSION['user_id'],
+            "owner"         => $this->session->getUserId(),
             "expected_rait" => $this->request->get('reit'),
             "status"        => 'N',
             "created_at"    => date('Y-m-d')
@@ -156,7 +148,7 @@ class Project extends AbstractController
     /**
      * change status to Finished for project
      */
-    function statusChange()
+    public function statusChange()
     {
         $id           = $this->request->get('project.id');
         $reit         = $this->request->get('reit.id');
@@ -170,7 +162,7 @@ class Project extends AbstractController
     /**
      * Change status to Active for project and set implementer for project
      */
-    function updateBid()
+    public function updateBid()
     {
         $id    = $this->request->get('project.id');
         $token = $this->request->get('bid.id');
@@ -193,22 +185,60 @@ class Project extends AbstractController
             $this->model->getCriteria('id', '=', $bid['user_id']),
         ];
 
-        $implementer = $this->get('user.model')->getItem($implementer_criteria);
-        $mailer      = new SmtpMailer(
-            ConfigHolder::getConfig('smtp_username'),
-            ConfigHolder::getConfig('smtp_password'),
-            ConfigHolder::getConfig('smtp_host'),
-            ConfigHolder::getConfig('smtp_port')
-        );
+        $implementer = $this->get('user.model')->getItem($implementer_criteria);        
+       
+        $result = $this->get('mailer')->sendBidAccept($implementer['first_name'],$implementer['email'],$id);
 
-        $user_name = $implementer['first_name'];
-        $email     = $implementer['email'];
-        $text      = ' Hello '.$user_name.'! Your Bid was accepted. For looking, go to the link: 
-        <a href="'.ConfigHolder::getConfig('host').'/project/'.$id.'">Project</a>';
-
-        $result = $mailer->send($email, 'Bid accepted', $text);
-
-        header('Location: /');
+        $this->get("response")->redirectToMainPage();
     }
     
+    /**
+     *  make mane page with Top of freelancer
+     */
+    public function getMainPage()
+    {
+        $criteria[] = $this->model->getCriteria('status', '=', 'N');
+        if ($this->request->get('reit') != null) {
+            $criteria[] = $this->model->getCriteria('expected_rait', '<', $this->request->get('reit'));
+        }
+        if ($this->request->get('budget') != null) {
+            $criteria[] = $this->model->getCriteria('cost', '<', $this->request->get('budget'));
+        }
+        if ($this->request->get('tags') != null) {
+            $tags             = $this->request->get('tags');
+            $tags             = '(\''.str_replace(',', '\',\'', $tags).'\')';
+            $projects_by_tags = $this->get('tags.model')->getList([$this->model->getCriteria('name', 'in', $tags)]);
+            $ids              = "";
+            foreach ($projects_by_tags as $project) {
+                $ids .= $project['project_id'].',';
+            }
+            $ids        = rtrim($ids, ',');
+            $criteria[] = $this->model->getCriteria('tbl.id', 'in', '('.$ids.')');
+        }
+        if ($this->request->get('deadline') != null) {
+            $date       = date('Y-m-d', strtotime(str_replace('.', '/', $this->request->get('deadline'))));
+            $criteria[] = $this->model->getCriteria('dedline', '<', $date);
+        }
+
+        if ($this->request->get('page') != null) {
+            $this->model->limit($this->request->get('page') * 10, 10);
+        } else {
+            $this->model->limit(0, 10);
+        }
+        $pr = $this->model->getList($criteria);
+        foreach ($pr as $key => $project) {
+            $tg   = $this->get('tags.model')->getList([$this->model->getCriteria('project_id', '=', $project['id'])]);
+            $tags = "";
+            foreach ($tg as $tag) {
+                $tags .= ' '.$tag['name'].',';
+            }
+            $pr[$key]["tags"] = rtrim($tags, ',');
+        }
+        $pr['top']   = $this->get('user')->getTop($pr);
+        $pr['total'] = $this->model->getTotal($criteria)['total'];
+        $pr["type"] = "PL";
+        $pr["user_type"] = $this->session->getUserType();
+        $pr["user_id"] = $this->session->getUserId();
+        $this->get("project.view")->display($pr);
+    }
 }

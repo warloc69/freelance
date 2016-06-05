@@ -27,13 +27,22 @@ class Project extends AbstractView
      * render body html context
      * @param $context information for rendering
      */
-    function generateBody($context)
+    public function generateBody($context)
     {
-        if(isset($context["isList"])) {
-            include "tmp/ProjectList.php";
-        } else {
-            include "tmp/ProjectBodyFreelancer.php";
+        switch ($context["type"]) {
+            case "MPL" : {
+                include "tmp/MyProjectList.php";
+                break;
+            } 
+            case "PL": {
+                include "tmp/ProjectList.php";
+                $this->assignValue('@top',$context['top']);
+                break;
+            }
+            case "P": {
+                include "tmp/ProjectBody.php";
+            }
+                
         }
-
     }
 }

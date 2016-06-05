@@ -23,8 +23,16 @@ class DefaultController extends AbstractController
     /**
      * used if correct action not found
      */
-    function _actionDefault()
+    public function _actionDefault()
     {
         $this->get('default.view')->display();
+    }
+    
+    /**
+     * used if correct action not found
+     */
+    public function serverError()
+    {
+        $this->get('default.view')->display("500 Internal Server error");
     }
 }

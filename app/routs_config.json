@@ -1,19 +1,23 @@
 {
   "GET": {
     "#^\/$#": {
-      "service": "user",
-      "action": "getTop"
+      "service": "project",
+      "action": "getMainPage"
     },
     "#^\/.page=([0-9]+)$#": {
-      "service": "user",
-      "action": "getTop"
+      "service": "project",
+      "action": "getMainPage"
     },
     "#^\/filter.*#": {
-      "service": "user",
-      "action": "getTop"
+      "service": "project",
+      "action": "getMainPage"
+    },
+    "#^\/login.*#": {
+      "service": "loginManager",
+      "action": "login"
     },
     "#^\/auth.*$#": {
-      "service": "user",
+      "service": "loginManager",
       "action": "auth"
     },
     "#^\/project\/([0-9]+)$#": {
@@ -29,7 +33,7 @@
       "action": "updateBid"
     },
     "#^\/logout$#": {
-      "service": "user",
+      "service": "loginManager",
       "action": "logout"
     }
   },

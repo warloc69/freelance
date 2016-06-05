@@ -22,20 +22,20 @@ use framework\QueryBuilder;
  */
 class Project extends QueryBuilder
 {
-    private $request = null;
-
     /**
      * Project constructor.
      *
      * @param $request
      * @param $db
      */
-    function __construct($request, $db)
+    public function __construct($db)
     {
-        parent::__construct();
-        $this->request = $request;
+        parent::__construct($db);
         $this->table   = "project";
-        $this->db      = $db->getConnection();
-        @session_start();
+    }
+
+    protected function queryOrder()
+    {
+        $this->order("created_at desc");
     }
 }

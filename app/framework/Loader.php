@@ -26,7 +26,7 @@ class ClassLoader
     /**
      * ClassLoader constructor.
      */
-    function __construct()
+    public function __construct()
     {
         $routsConfig   = file_get_contents("..\\app\\class_loader_config.json");
         if(!$routsConfig) {
@@ -40,7 +40,7 @@ class ClassLoader
      * callback function used for autoloading
      * @param $class class name
      */
-    function autoload($class)
+    private function autoload($class)
     {
         $className = ltrim($class, '\\');
         $file      = null;
@@ -56,6 +56,8 @@ class ClassLoader
         }
         if (file_exists($file)) {
             include $file;
+        } else {
+            throw new \Exception("file not found" . $file);
         }
     }
 }

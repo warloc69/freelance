@@ -22,26 +22,22 @@ use framework\QueryBuilder;
  */
 class Tag extends QueryBuilder
 {
-    private $request = null;
-
     /**
      * Tag constructor.
      *
      * @param $request
      * @param $db
      */
-    function __construct($request, $db)
+    public function __construct($db)
     {
-        parent::__construct();
-        $this->request = $request;
-        $this->table   = "tags";
-        $this->db      = $db->getConnection();
+        parent::__construct($db);
+        $this->table = "tags";
     }
 
     /**
      * function used for build select section from part
      */
-    function queryColumn()
+    protected function queryColumn()
     {
         $this->select('tbl.id, tbl.name, tgs.project_id');
     }
@@ -49,7 +45,7 @@ class Tag extends QueryBuilder
     /**
      * function used for build join section from part
      */
-    function queryJoin()
+    protected function queryJoin()
     {
         $this->join('project_tags tgs', 'inner', 'tbl.id=tgs.tag_id');
     }
@@ -57,7 +53,8 @@ class Tag extends QueryBuilder
     /**
      * @param $params add new project tags
      */
-    function addProjectTag($params) {
+    public function addProjectTag($params)
+    {
         $this->table = 'project_tags';
         $this->add($params);
         $this->table = 'tags';

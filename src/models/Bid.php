@@ -27,10 +27,9 @@ class Bid extends QueryBuilder
      *
      * @param $db
      */
-    function __construct($db)
+    public function __construct($db)
     {
-        parent::__construct();
-        $this->db = $db->getConnection();
+        parent::__construct($db);
         $this->table   = "bids";
     }
 

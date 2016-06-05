@@ -7,7 +7,7 @@
                     <h2 class="header">Project: <?php echo $context['name']; ?></h2>
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <?php if (isset($_SESSION['user_type'])): ?>
+                            <?php if (isset($context['user_type'])): ?>
                                 <input type="hidden" name="logined" id="logined">
                             <?php endif; ?>
                             <label class="control-label col-sm-5" for="comment">Comment: </label>
@@ -37,6 +37,10 @@
                 Budget: <?php echo $context['cost']; ?>
             </div>
         </div>
+    </div>
+    <div id="header" class="row well">
+        <a href="/" style="float: left">Home</a>
+        <a href="/project" style="float: right">My projects</a>
     </div>
     <div id="category" class="row">
         <div id="featured" class="col-md-15">

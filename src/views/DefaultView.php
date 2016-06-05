@@ -23,9 +23,9 @@ class DefaultView
     /**
      * render html
      */
-    function display()
-    {
-        include "tmp/404.php";
+    public function display($code = "404. Page not found")
+    {        
+        include "tmp/error.php";
     }
 
 }

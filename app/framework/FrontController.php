@@ -10,6 +10,8 @@
 
 namespace framework;
 
+use controller\DefaultController;
+
 /**
  * FrontController class
  *
@@ -23,24 +25,51 @@ class FrontController
     private $service = null;
     private $action = null;
     private $di = null;
+    private static $instance;
+    
+    private function __clone(){}
+
+    private function __wakeup() {}
+
+    /**
+     * @return FrontController 
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
     /**
      * FrontController constructor.
      */
-    function __construct()
+    private function __construct()
     {
-        $this->di = new \framework\DIContainer();
-        ConfigHolder::load();
-        $rout          = $this->di->get('router');
-        $this->service = $rout->getService();
-        $this->action  = $rout->getAction();
-        $this->execut();
+    }
+
+    /**
+     * init FrontController
+     */
+    public function run()
+    {
+        try{
+            $this->di = new \framework\DIContainer();
+            ConfigHolder::load();
+            $rout          = $this->di->get('router');
+            $this->service = $rout->getService();
+            $this->action  = $rout->getAction();
+            $this->execute();
+        } catch(\Exception $e){
+            (new DefaultController())->serverError();
+        }
     }
 
     /**
      *  function execute action from request
      */
-    function execut()
+    private function execute()
     {
         if ($this->service != null && $this->action != null) {
             $service = $this->di->get($this->service);

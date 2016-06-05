@@ -25,39 +25,43 @@ class QueryBuilder extends Query
     protected $limit_offset = 5;
 
 
+    public function __construct($db)
+    {
+        $this->db = $db->getConnection();
+    }
+
     /**
      * function used for build join section from part
      */
-    function queryJoin()
+    protected function queryJoin()
     {
     }
 
     /**
      * function used for build having section from part
      */
-    function queryHaving()
+    protected function queryHaving()
     {
     }
 
     /**
      * function used for build group section from part
      */
-    function queryGroup()
+    protected function queryGroup()
     {
     }
 
     /**
      * function used for build order section from part
      */
-    function queryOrder()
+    protected function queryOrder()
     {
-        $this->order("created_at desc");
     }
 
     /**
      * function used for build where section from part
      */
-    function queryWhere($info)
+    protected function queryWhere($info)
     {
         foreach ($info as $criteria) {
             $this->where($criteria['field'], $criteria['operator'], $criteria['value']);
@@ -67,7 +71,7 @@ class QueryBuilder extends Query
     /**
      * function used for build select section from part
      */
-    function queryColumn()
+    protected function queryColumn()
     {
         $this->select('*');
     }
@@ -75,17 +79,17 @@ class QueryBuilder extends Query
     /**
      * function used for build limit section
      */
-    function queryLimit($limit_start, $limit_offset)
+    protected function queryLimit($limit_start, $limit_offset)
     {
         $this->limit($limit_start, $limit_offset);
     }
 
     /**
      * function return item from database
-     * 
+     *
      * @info array created accordingly to getCriteria method
      */
-    function getItem($info)
+    public function getItem($info)
     {
         return $this->getResult($info);
     }
@@ -95,7 +99,7 @@ class QueryBuilder extends Query
      *
      * @info array created accordingly to getCriteria method , can be ignored, default empty
      */
-    function getList($info = [])
+    public function getList($info = [])
     {
         return $this->getResult($info, false);
     }
@@ -105,7 +109,7 @@ class QueryBuilder extends Query
      *
      * @info array created accordingly to getCriteria method
      */
-    function getTotal($info)
+    public function getTotal($info)
     {
         $this->resetContext();
         $this->select('count(1) as total');
@@ -119,10 +123,10 @@ class QueryBuilder extends Query
     /**
      * function return result of select from database
      *
-     * @param info array created accordingly to getCriteria method
+     * @param info  array created accordingly to getCriteria method
      * @param singl if true return item else list, default true
      */
-    function getResult($info, $singl = true)
+    private function getResult($info, $singl = true)
     {
         $this->queryColumn();
         $this->queryJoin();
@@ -147,11 +151,12 @@ class QueryBuilder extends Query
 
     /**
      * function insert item to database
+     *
      * @param $params array key => value
      *
      * @return id of new item
      */
-    function add($params)
+    public function add($params)
     {
         $keys          = "";
         $prepared_keys = "";
@@ -172,11 +177,12 @@ class QueryBuilder extends Query
 
     /**
      * function update item in database
+     *
      * @param $params array key => value
-     * @param $where array key => value
+     * @param $where  array key => value
      *
      */
-    function update($params, $where)
+    public function update($params, $where)
     {
         $keys      = "";
         $values    = array();
@@ -198,14 +204,15 @@ class QueryBuilder extends Query
     }
 
     /**
-     * function make criteria for select 
+     * function make criteria for select
+     *
      * @param $field
      * @param $operator
      * @param $value
      *
      * @return array
      */
-    function getCriteria($field, $operator, $value)
+    public function getCriteria($field, $operator, $value)
     {
         return [
             'field'    => $field,

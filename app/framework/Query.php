@@ -34,7 +34,7 @@ class Query extends DIContainer
     /**
      *  function build where part of query
      */
-    function where($name, $operation, $value)
+    public function where($name, $operation, $value)
     {
         if (empty($this->where)) {
             $this->where .= 'where ';
@@ -51,7 +51,7 @@ class Query extends DIContainer
     /**
      *  function build join part of query
      */
-    function join($name, $type, $value)
+    public function join($name, $type, $value)
     {
         $this->join .= $type.' join ';
         $this->join .= $name.' on '.$value.' ';
@@ -60,7 +60,7 @@ class Query extends DIContainer
     /**
      *  function build order part of query
      */
-    function order($name)
+    public function order($name)
     {
         if (empty($this->order)) {
             $this->order = 'ORDER BY ';
@@ -73,7 +73,7 @@ class Query extends DIContainer
     /**
      *  function build group part of query
      */
-    function group($field)
+    public function group($field)
     {
         $this->group .= 'GROUP BY '.$field.' ';
     }
@@ -81,7 +81,7 @@ class Query extends DIContainer
     /**
      *  function build having part of query
      */
-    function having($field, $operation, $function)
+    public function having($field, $operation, $function)
     {
         $this->having .= $function.' '.$operation.' '.$field;
         $this->select .= $function.' res_having ';
@@ -90,7 +90,7 @@ class Query extends DIContainer
     /**
      *  function build limit part of query
      */
-    function limit($start, $offset)
+    public function limit($start, $offset)
     {
         if (empty($this->limit)) {
             $this->limit .= 'LIMIT '.$start.','.$offset.' ';
@@ -100,7 +100,7 @@ class Query extends DIContainer
     /**
      *  function build select part of query
      */
-    function select($name)
+    public function select($name)
     {
         if (empty($this->select)) {
             $this->select = 'select ';
@@ -111,7 +111,7 @@ class Query extends DIContainer
     /**
      *  function build full query
      */
-    function getQuery()
+    public function getQuery()
     {
         $this->query
             = $this->select.'from '.$this->table.' tbl '.
@@ -127,7 +127,7 @@ class Query extends DIContainer
     /**
      *  function reset query
      */
-    function resetContext()
+    public  function resetContext()
     {
         $this->query  = '';
         $this->select = '';

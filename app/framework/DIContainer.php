@@ -26,7 +26,7 @@ class DIContainer
     /**
      * DIContainer constructor.
      */
-    function __construct()
+    public function __construct()
     {
         if (self::$templates == null) {
             self::$services  = array();
@@ -44,7 +44,7 @@ class DIContainer
      * 
      * @param $service string name of service
      */
-    function get($service)
+    public function get($service)
     {
         $constructor = self::$templates[$service]["constructor"];
         if (count(self::$services) != 0 && in_array($service, self::$services)) {
@@ -59,7 +59,7 @@ class DIContainer
             }
             $initArgs[$arg] = self::$services[$arg];
         }
-
+        
         $r                        = new \ReflectionClass($constructor);
         self::$services[$service] = $r->newInstanceArgs($initArgs);
         return self::$services[$service];

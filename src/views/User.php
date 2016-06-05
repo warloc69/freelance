@@ -20,12 +20,18 @@ namespace view;
  */
 class User extends AbstractView
 {
+    public function __construct()
+    {
+        $this->setHeaderFileName(null);
+        $this->setFooterFileName(null);
+    }
+
     /**
      * render body html context
      * @param $context information for rendering
      */
-    function generateBody($context)
+    public function generateBody($context)
     {
-        include "tmp/UserBody.php";
+        return file_get_contents("..\\src\\views\\tmp\\UserTop.php");
     }
 }
