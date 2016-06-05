@@ -40,7 +40,7 @@ class User extends AbstractController
      *  Change user role
      */
     public function changeRole() {
-        $this->session->setUserType($this->request->get('user-role'));
+        $this->get('session')->setUserType($this->request->get('user-role'));
         $this->get("response")->redirect('/project');
     }
 

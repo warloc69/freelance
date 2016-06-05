@@ -17,7 +17,7 @@
                     <a href="<?php echo $login; ?>">Login <br> Authorize</a>
                 <?php else : ?>
                     <a href="/logout">Logout</a><br>
-                    <a href="project">My page</a>
+                    <a href="project">My projects</a>
                 <?php endif; ?>
             </div>
         </div>
