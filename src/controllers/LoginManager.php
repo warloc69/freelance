@@ -98,7 +98,7 @@ class LoginManager extends AbstractController
         ];
         $item     = $this->get('user.model')->getItem($creteria);
         if ($item == false) {
-            $this->session->setUserId($this->model->add($user));
+            $this->session->setUserId($this->get('user.model')->add($user));
             $this->session->setUserType('PM');
         } else {
             $this->session->setUserId($item['id']);
